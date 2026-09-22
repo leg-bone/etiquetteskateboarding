@@ -15,7 +15,7 @@
 </div>
     <header class="topbar">
       <nav class="menu menu-logo" aria-label="Home">
-        <a href="#home"><img src="./web01.png" alt="Home" /></a>
+        <a class="a1" href="#home"><img src="./web01.png" alt="Home" /></a>
       </nav>
       <nav class="menu menu-main" aria-label="Main navigation">
         <a href="#about">About ❔</a>
@@ -152,11 +152,20 @@ Etiquette Skateboarding Club was founded in 2025 with the idea that everyone who
 
           event.preventDefault();
           const scrollContainer = document.scrollingElement || document.documentElement;
+          const topbar = document.querySelector(".topbar");
           const targetTop = target.getBoundingClientRect().top + window.scrollY;
-          const centeredTop = targetTop - (window.innerHeight - target.offsetHeight) / 2;
+          const headerOffset = (topbar ? topbar.offsetHeight : 0) + 24;
+          const alignedTop = targetTop - headerOffset;
           const maximumScroll = scrollContainer.scrollHeight - window.innerHeight;
           history.pushState({}, "", link.getAttribute("href"));
-          scrollContainer.scrollTop = Math.min(maximumScroll, Math.max(0, centeredTop));
+          scrollContainer.scrollTop = Math.min(maximumScroll, Math.max(0, alignedTop));
+
+          link.classList.remove("is-flipping");
+          void link.offsetWidth;
+          link.classList.add("is-flipping");
+          window.setTimeout(() => {
+            link.classList.remove("is-flipping");
+          }, 450);
 
           target.style.setProperty("--flash-color", flashColors[index]);
           target.classList.remove("section-flash");

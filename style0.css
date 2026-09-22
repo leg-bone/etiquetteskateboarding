@@ -126,10 +126,40 @@ a {
 
   border: 1px solid transparent;
   border-radius: 999px;
-  transition: background 0.2s ease, color 0.2s ease;
+  transform-style: preserve-3d;
+  transition: transform 0.32s ease, background 0.2s ease, color 0.2s ease;
+  perspective: 800px;
+}
+.menu a.a1 {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  color: var(--text);
+  text-decoration: none;
+  font-size: var(--menu-font-size, 0.95rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  border: 1px solid transparent;
+  border-radius: 999px;
+  transform-style: preserve-3d;
+  transition: transform 0.32s ease, background 0.2s ease, color 0.2s ease;
+  perspective: 800px;
+  padding:0px;
 }
 
 .menu a img {
+  width: auto;
+
+  height: 2.9rem;
+
+  max-width: none;
+  aspect-ratio: auto;
+
+}
+.menu a.a1 img {
   width: auto;
 
   height: 2.9rem;
@@ -143,20 +173,50 @@ a {
   justify-self: center;
 }
 
+.menu a.a1{
+  justify-self: center;
+}
 
+.menu a {
+  border: 3px solid var(--line);
+  padding-left: var(--menu-text-padding, 2.5rem);
+  padding-right: var(--menu-text-padding, 2.5rem);
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+}
 
 .menu a:hover,
 .menu a:focus-visible {
   background: var(--text);
   color: white;
   outline: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.menu a.a1:hover,
+.menu a.a1:hover,
+.menu a.a1:focus-visible {
+  color: white;
+  outline: none;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
+.menu a.is-flipping {
+  transform: rotateX(360deg);
+  transition: transform 0.42s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.menu a.a1.is-flipping {
+  transform: rotateX(360deg);
+  transition: transform 0.42s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
 .menu a:nth-child(1):hover,
 .menu a:nth-child(1):focus-visible {
   border-color: #ffcc00;
 }
 
+.menu a.a1:nth-child(1):hover,
+.menu a.a1:nth-child(1):focus-visible {
+  border-color: #ffcc00;
+}
 .menu a:nth-child(2):hover,
 .menu a:nth-child(2):focus-visible {
   border-color: #007aff;
@@ -187,6 +247,10 @@ a {
 
 .menu-main a:nth-child(1):hover,
 .menu-main a:nth-child(1):focus-visible {
+  border-color: #007aff;
+}
+.menu-main a.a1:nth-child(1):hover,
+.menu-main a.a1:nth-child(1):focus-visible {
   border-color: #007aff;
 }
 
