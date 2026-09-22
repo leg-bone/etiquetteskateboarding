@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Etiquette Skateboarding</title>
     <link rel="icon" type="image/png" href="./E.png" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style0.css" />
   </head>
   <body>
     <audio id="scroll-audio" src="./roll.wav" preload="auto"></audio>
@@ -14,8 +14,10 @@
   
 </div>
     <header class="topbar">
-      <nav class="menu" aria-label="Main navigation">
+      <nav class="menu menu-logo" aria-label="Home">
         <a href="#home"><img src="./web01.png" alt="Home" /></a>
+      </nav>
+      <nav class="menu menu-main" aria-label="Main navigation">
         <a href="#about">About ❔</a>
         <a href="#contact">Contact 📩</a>
         <a href="#checkout">Checkout 💸</a>
@@ -111,25 +113,27 @@ Etiquette Skateboarding Club was founded in 2025 with the idea that everyone who
     </main>
 
     <script>
-      const menu = document.querySelector(".menu");
+      const menus = document.querySelectorAll(".menu");
 
       const resizeMenu = () => {
-        menu.style.setProperty("--menu-scale", "1");
-        menu.style.setProperty("--menu-font-size", "0.95rem");
-        menu.style.setProperty("--menu-text-padding", "2.5rem");
+        menus.forEach((menu) => {
+          menu.style.setProperty("--menu-scale", "1");
+          menu.style.setProperty("--menu-font-size", "0.95rem");
+          menu.style.setProperty("--menu-text-padding", "2.5rem");
 
-        const availableWidth = menu.parentElement.clientWidth;
-        let menuScale = Math.min(1, availableWidth / menu.scrollWidth);
+          const availableWidth = menu.parentElement.clientWidth;
+          let menuScale = Math.min(1, availableWidth / menu.scrollWidth);
 
-        for (let iteration = 0; iteration < 4; iteration += 1) {
-          const readableFontSize = Math.max(0.95, 0.75 / menuScale);
-          const compactPadding = Math.max(0.65, 0.5 + (2 * menuScale));
-          menu.style.setProperty("--menu-font-size", `${readableFontSize}rem`);
-          menu.style.setProperty("--menu-text-padding", `${compactPadding}rem`);
-          menuScale = Math.min(1, availableWidth / menu.scrollWidth);
-        }
+          for (let iteration = 0; iteration < 4; iteration += 1) {
+            const readableFontSize = Math.max(0.95, 0.75 / menuScale);
+            const compactPadding = Math.max(0.65, 0.5 + (2 * menuScale));
+            menu.style.setProperty("--menu-font-size", `${readableFontSize}rem`);
+            menu.style.setProperty("--menu-text-padding", `${compactPadding}rem`);
+            menuScale = Math.min(1, availableWidth / menu.scrollWidth);
+          }
 
-        menu.style.setProperty("--menu-scale", menuScale);
+          menu.style.setProperty("--menu-scale", menuScale);
+        });
       };
 
       window.addEventListener("resize", resizeMenu);

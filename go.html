@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Etiquette Skateboarding</title>
+    <link rel="icon" type="image/png" href="./E.png" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body class="intro-active">
+    <div class="intro-overlay" aria-hidden="true">
+      <audio id="intro-audio" src="./sound2_3.mp3" preload="auto"></audio>
+      <video class="intro-video" muted playsinline></video>
+    </div>
+
+    <script>
+      const introVideos = [
+        "./wink01.mp4",
+        "./wink02.mp4",
+        "./wink03.mp4",
+        "./wink04.mp4"
+      ];
+      const introOverlay = document.querySelector(".intro-overlay");
+      const introVideo = document.querySelector(".intro-video");
+      const introAudio = document.getElementById("intro-audio");
+
+      const isMobileDevice = () => {
+        const ua = navigator.userAgent || navigator.vendor || window.opera || "";
+        if (/android|iphone|ipad|ipod|iemobile|blackberry|opera mini/i.test(ua)) {
+          return true;
+        }
+        return window.matchMedia("(max-width: 768px) and (orientation: portrait)").matches;
+      };
+
+      const goToDestination = () => {
+        window.location.href = isMobileDevice() ? "homepage.html" : "home.html";
+      };
+
+      let introFinished = false;
+
+      const finishIntro = () => {
+        if (introFinished) {
+          return;
+        }
+
+        introFinished = true;
+        introAudio.pause();
+        introAudio.currentTime = 0;
+        introVideo.classList.add("is-fading-out");
+
+        introVideo.addEventListener("transitionend", goToDestination, { once: true });
+      };
+
+      introVideo.src = introVideos[Math.floor(Math.random() * introVideos.length)];
+      introVideo.addEventListener("ended", finishIntro);
+      introVideo.addEventListener("error", finishIntro);
+      introVideo.addEventListener("playing", () => {
+        introAudio.currentTime = 0;
+        introAudio.volume = 0.1;
+        introAudio.play().catch(() => {
+          // Autoplay may be blocked until the user interacts with the page.
+        });
+      });
+      introVideo.play().catch(finishIntro);
+    </script>
+  </body>
+</html>
+

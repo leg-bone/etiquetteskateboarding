@@ -142,16 +142,10 @@ a {
 }
 
 .menu a:first-child {
-  justify-self: start;
+  justify-self: center;
 }
 
-.menu a:not(:first-child) {
-  border: 3px solid var(--line);
-  padding-left: var(--menu-text-padding, 2.5rem);
-  padding-right: var(--menu-text-padding, 2.5rem);
-  padding-top: .5rem;
-  padding-bottom: .5rem;
-}
+
 
 .menu a:hover,
 .menu a:focus-visible {
@@ -188,8 +182,12 @@ a {
 }
 
 .menu-logo {
-  margin-bottom: 0.75rem;
+  display: flex;
+  justify-content: center;
+  width: max-content;
+  margin: 0 auto 0.75rem;
 }
+
 
 .menu-main a:nth-child(1):hover,
 .menu-main a:nth-child(1):focus-visible {
