@@ -126,9 +126,7 @@ a {
 
   border: 1px solid transparent;
   border-radius: 999px;
-  transform-style: preserve-3d;
-  transition: transform 0.32s ease, background 0.2s ease, color 0.2s ease;
-  perspective: 800px;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .menu a img {
@@ -152,8 +150,6 @@ a {
   background: var(--text);
   color: white;
   outline: none;
-  transform: rotateX(360deg);
-  transition: transform 0.42s cubic-bezier(0.2, 0.8, 0.2, 1), background 0.2s ease, color 0.2s ease;
 }
 
 .menu a:nth-child(1):hover,
