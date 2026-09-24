@@ -109,9 +109,7 @@ a {
   transform: scale(var(--menu-scale, 1));
   transform-origin: top left;
 }
-.spacer {
-  height: 2rem;
-}
+
 .menu a {
   position: relative;
   display: inline-flex;
