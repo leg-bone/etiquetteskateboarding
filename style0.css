@@ -20,8 +20,9 @@ html {
 body {
   margin: 0;
   font-family: Tahoma, Geneva, sans-serif;
-  background: linear-gradient(180deg, #f8f4ef 0%, #f0e7e1 100%);
+  background: url("./concrete.jpg") repeat;
   color: var(--text);
+  image-rendering: optimizeSpeed;
 }
 
 body.intro-active {
@@ -185,7 +186,9 @@ a {
 
 .menu a:hover,
 .menu a:focus-visible {
-  background: var(--text);
+  background: url("./grip.jpg") repeat;
+  image-rendering: optimizeSpeed;
+  background-size: 250px 500px;
   color: white;
   outline: none;
   transition: background 0.2s ease, color 0.2s ease;
