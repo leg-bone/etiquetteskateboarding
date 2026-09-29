@@ -19,7 +19,7 @@ html {
 
 body {
   margin: 0;
-  font-family: Tahoma, Geneva, sans-serif;
+  font-family: Tahoma, sans-serif;
   background: url("./concrete.jpg") repeat;
   color: var(--text);
   image-rendering:optimizeSpeed;
@@ -124,7 +124,9 @@ a {
   font-size: var(--menu-font-size, 0.95rem);
   letter-spacing: 0.04em;
   text-transform: uppercase;
-
+  font-family: Tahoma, sans-serif !important;
+  font-weight: 600;
+letter-spacing: 0.04em;
   border: 1px solid transparent;
   border-radius: 999px;
   transform-style: preserve-3d;

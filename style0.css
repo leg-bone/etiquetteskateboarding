@@ -122,13 +122,16 @@ a {
   font-size: var(--menu-font-size, 0.95rem);
   letter-spacing: 0.04em;
   text-transform: uppercase;
-
+  font-family: Tahoma, sans-serif !important;
+  font-weight: 600;
+letter-spacing: 0.04em;
   border: 1px solid transparent;
   border-radius: 999px;
   transform-style: preserve-3d;
   transition: transform 0.32s ease, background 0.2s ease, color 0.2s ease;
   perspective: 800px;
 }
+
 .menu a.a1 {
   position: relative;
   display: inline-flex;
