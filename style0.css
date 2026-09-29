@@ -16,7 +16,9 @@
 html {
   scroll-behavior: smooth;
 }
-
+.spacer {
+  height: .1rem;
+}
 body {
   margin: 0;
   font-family: Tahoma, Geneva, sans-serif;
@@ -87,10 +89,10 @@ a {
 
 .topbar {
   position: sticky;
-  top: 18px;
+
   z-index: 10;
   width: min(1100px, calc(100% - 32px));
-  margin: 20px auto 0;
+  margin: 10px auto 0;
 }
 
 .menu {
@@ -275,7 +277,7 @@ letter-spacing: 0.04em;
 
 .page-shell {
   width: min(1100px, calc(100% - 32px));
-  margin: 32px auto 72px;
+  margin: 0px auto 72px;
   display: grid;
   gap: 1.25rem;
 }

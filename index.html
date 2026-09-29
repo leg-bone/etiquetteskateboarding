@@ -9,8 +9,12 @@
   </head>
   <body class="intro-active">
     <div class="intro-overlay" aria-hidden="true">
+      <video class="intro-bg-video" src="./fall.mp4" autoplay muted playsinline></video>
+      <div class="intro-bg-fade"></div>
       <audio id="intro-audio" src="./sound2_3.mp3" preload="auto"></audio>
-      <video class="intro-video" muted playsinline></video>
+      <!-- source video decodes offscreen; the canvas renders it with black keyed out -->
+      <video class="intro-video-source" muted playsinline></video>
+      <canvas class="intro-video"></canvas>
     </div>
 
     <script>
@@ -21,8 +25,69 @@
         "./wink04.mp4"
       ];
       const introOverlay = document.querySelector(".intro-overlay");
-      const introVideo = document.querySelector(".intro-video");
+      const introBgVideo = document.querySelector(".intro-bg-video");
+      const introBgFade = document.querySelector(".intro-bg-fade");
+      const introVideo = document.querySelector(".intro-video-source");
+      const introCanvas = document.querySelector(".intro-video");
+      const introCtx = introCanvas.getContext("2d", { willReadFrequently: true });
       const introAudio = document.getElementById("intro-audio");
+
+      const CANVAS_RENDER_SCALE = 0.6;
+      const LUMA_KEY_GAIN = 3.2; // higher gain makes near-black pixels transparent faster
+      let lumaKeyFrameId = null;
+
+      const resizeIntroCanvas = () => {
+        introCanvas.width = Math.max(320, Math.round(introCanvas.clientWidth * CANVAS_RENDER_SCALE));
+        introCanvas.height = Math.max(320, Math.round(introCanvas.clientHeight * CANVAS_RENDER_SCALE));
+      };
+
+      const drawLumaKeyFrame = () => {
+        if (introVideo.paused || introVideo.ended) {
+          return;
+        }
+
+        const videoAspect = introVideo.videoWidth / introVideo.videoHeight || 1;
+        const canvasAspect = introCanvas.width / introCanvas.height;
+        let drawWidth = introCanvas.width;
+        let drawHeight = introCanvas.height;
+
+        if (videoAspect > canvasAspect) {
+          drawHeight = drawWidth / videoAspect;
+        } else {
+          drawWidth = drawHeight * videoAspect;
+        }
+
+        const dx = (introCanvas.width - drawWidth) / 2;
+        const dy = (introCanvas.height - drawHeight) / 2;
+
+        introCtx.clearRect(0, 0, introCanvas.width, introCanvas.height);
+        introCtx.drawImage(introVideo, dx, dy, drawWidth, drawHeight);
+
+        const frame = introCtx.getImageData(0, 0, introCanvas.width, introCanvas.height);
+        const pixels = frame.data;
+
+        for (let i = 0; i < pixels.length; i += 4) {
+          const luminance = pixels[i] * 0.299 + pixels[i + 1] * 0.587 + pixels[i + 2] * 0.114;
+          pixels[i + 3] = Math.min(255, luminance * LUMA_KEY_GAIN);
+        }
+
+        introCtx.putImageData(frame, 0, 0);
+        lumaKeyFrameId = requestAnimationFrame(drawLumaKeyFrame);
+      };
+
+      const stopLumaKeyFrame = () => {
+        if (lumaKeyFrameId !== null) {
+          cancelAnimationFrame(lumaKeyFrameId);
+          lumaKeyFrameId = null;
+        }
+      };
+
+      window.addEventListener("resize", resizeIntroCanvas);
+      resizeIntroCanvas();
+
+      introBgVideo.addEventListener("ended", () => {
+        introBgFade.classList.add("is-visible");
+      });
 
       const isMobileDevice = () => {
         const ua = navigator.userAgent || navigator.vendor || window.opera || "";
@@ -44,11 +109,12 @@
         }
 
         introFinished = true;
+        stopLumaKeyFrame();
         introAudio.pause();
         introAudio.currentTime = 0;
-        introVideo.classList.add("is-fading-out");
+        introCanvas.classList.add("is-fading-out");
 
-        introVideo.addEventListener("transitionend", goToDestination, { once: true });
+        introCanvas.addEventListener("transitionend", goToDestination, { once: true });
       };
 
       introVideo.src = introVideos[Math.floor(Math.random() * introVideos.length)];
@@ -60,6 +126,9 @@
         introAudio.play().catch(() => {
           // Autoplay may be blocked until the user interacts with the page.
         });
+        resizeIntroCanvas();
+        stopLumaKeyFrame();
+        lumaKeyFrameId = requestAnimationFrame(drawLumaKeyFrame);
       });
       introVideo.play().catch(finishIntro);
     </script>

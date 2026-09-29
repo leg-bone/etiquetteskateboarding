@@ -51,10 +51,45 @@ body.intro-active {
 .intro-video {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  display: block;
   transform: translateY(-10%);
   opacity: 1;
   transition: opacity 1s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.intro-video-source {
+  position: fixed;
+  left: -9999px;
+  top: -9999px;
+  width: 2px;
+  height: 2px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.intro-bg-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.intro-bg-fade {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: #ffffff;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1s ease;
+}
+
+.intro-bg-fade.is-visible {
+  opacity: 1;
 }
 
 .intro-video.is-fading-out {
@@ -111,7 +146,7 @@ a {
   transform-origin: top left;
 }
 .spacer {
-  height: 2rem;
+  height: .1rem;
 }
 .menu a {
   position: relative;
@@ -124,7 +159,7 @@ a {
   font-size: var(--menu-font-size, 0.95rem);
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  font-family: Tahoma, sans-serif !important;
+  font-family: Tahoma, sans-serif;
   font-weight: 600;
 letter-spacing: 0.04em;
   border: 1px solid transparent;
